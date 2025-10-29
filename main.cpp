@@ -1,5 +1,3 @@
-// Temp2025en.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 #include"Person.h"
 #include"Lib.h"
 
@@ -19,9 +17,7 @@ int main()
     // Output
     cout << left << setw(15) << "Name" << setw(15) << "Surname" << setw(20) << "Final_Point" << endl;
     cout << "------------------------------------------------------" << endl;
-    for (const auto &s : students) {
-        cout << left << setw(15) << s.firstname << setw(15) << s.surname
-             << fixed << setprecision(2) << setw(20) << s.Finalgrade << endl;
+    for (const auto &s : students) {cout << s << endl;
     }
 
     return 0;

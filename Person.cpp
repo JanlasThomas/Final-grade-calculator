@@ -4,7 +4,21 @@
         Finalgrade = std::accumulate(Homework.begin(), Homework.end(), 0.0) / Homework.size() * 0.4 + exam * 0.6;
     };
 
+    // Calculates median of homework
+double Person::med() {
+    vector<int> temp = Homework;
+    sort(temp.begin(), temp.end());
+    size_t n = temp.size();
+    if (n == 0) return 0.0;
+    if (n % 2 == 0)
+        return (temp[n/2 - 1] + temp[n/2]) / 2.0;
+    else
+        return temp[n/2];
+}
 
+void Person::FinalMed() {
+        Finalgrade = med() * 0.4 + exam * 0.6;
+    };
 
     //default constructor
     Person::Person ()
@@ -13,7 +27,7 @@
         surname= "Test";
         Homework = {9,9,9,9,9,9};
         exam = 9;
-        FinalAv();
+        Finalgrade = 0;
 
     };
 //parametrized constructor
@@ -23,7 +37,7 @@
         surname =B;
         Homework = C;
         exam = D;
-        FinalAv();
+        Finalgrade = 0;
     };
    //copy constructor
     Person::Person(const Person& other) {
@@ -56,30 +70,68 @@
 }
 
 std::ostream& operator<<(std::ostream& os, const Person& p) {
-    os << p.firstname << " " << p.surname << " Homework: ";
-    for (size_t i = 0; i < p.Homework.size(); ++i) {
-        os << p.Homework[i];
-        if (i != p.Homework.size() - 1) os << ",";
-    }
-    os << " Exam: " << p.exam << " Final: " << p.Finalgrade;
-    return os;
+
+
+    os << left << setw(15) << p.firstname << setw(15) << p.surname
+             << fixed << setprecision(2) << setw(20) << p.Finalgrade << endl;
 }
 
 std::istream& operator>>(std::istream& is, Person& p) {
-    std::cout << "Enter firstname: ";
+    cout << "Enter firstname: ";
     is >> p.firstname;
     std::cout << "Enter surname: ";
     is >> p.surname;
-    std::cout << "Enter number of homework grades: ";
-    size_t n;
-    is >> n;
-    p.Homework.resize(n);
-    std::cout << "Enter homework grades: ";
-    for (size_t i = 0; i < n; ++i)
-        is >> p.Homework[i];
-    std::cout << "Enter exam grade: ";
-    is >> p.exam;
-    p.FinalAv();  // recalculate final grade
-    return is;
+
+
+p.Homework.clear();
+cout<<"1. Enter 'R' to use Random homework & exam grades \n2. Enter 'S' to use your input grades" << endl;
+string t;
+is>>t;
+
+if(t == "R" || t == "r")
+{
+
+    srand(time(0));
+    vector <int> grades (5);
+    for ( int i=0; i <5; ++i )
+    {
+        grades[i] = rand() % 10;
+        p.Homework.push_back(i);
+    }
+
+    int rexam;
+    rexam = rand() % 10;
+    p.exam = rexam;
+
+
 }
 
+else if (t == "S" || t == "s")
+{
+   cout << "Enter the Homework grades (To stop enter a negative number): " << std::endl;
+int temp;
+while (true) {
+    is >> temp;
+    if (temp < 0) break;
+    p.Homework.push_back(temp);
+}
+   cout << "Enter exam grade: ";
+    is >> p.exam;
+}
+
+else{
+    cout << "choose the correct option" << endl;
+}
+    cout << "choose the method of Final grade calculation ( M = Median , A = Average) : ";
+    string choose;
+    cin>> choose;
+    if  (choose == "A" || choose == "a") {
+         p.FinalAv();
+    }
+    if(choose == "m" || choose == "M")
+    {
+         p.FinalMed ();
+    }
+
+    return is;
+}

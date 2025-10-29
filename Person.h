@@ -10,8 +10,12 @@ class Person
     int exam;
     double Finalgrade;
 
+
     void FinalAv();
+     double med();
+    void FinalMed();
     Person ();
+
 
     Person (string A, string B, vector<int> C, int D);
 
