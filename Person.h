@@ -8,7 +8,8 @@ class Person
     string firstname, surname;
     vector <int> Homework;
     int exam;
-    double Finalgrade;
+    double FinalgradeAvg;
+    double FinalgradeMed;
 
 
     void FinalAv();
