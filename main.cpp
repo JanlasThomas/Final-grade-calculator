@@ -9,15 +9,15 @@ int main()
     //filegenerator ("students1000000.txt",1000000);
     //filegenerator ("students10000000.txt",10000000);
 
-    deque <Person> pass;
-    deque <Person> fail;
+    list <Person> pass;
+    list <Person> fail;
 
     Timer timer;
 
     try {
         timer.timestart();
 
-        ifstream file("students10000000.txt");
+        ifstream file("students.txt");
 cout<<"Time taken to read file : " << endl;
         timer.timetaken();
 
@@ -29,7 +29,7 @@ cout<<"Time taken to read file : " << endl;
 
        if (!getline(file, header)){ throw runtime_error ( " Failed to read the header row") ; }
 
-        deque<Person> students;
+        list<Person> students;
         Person temp;
 
         while (file >> temp) {
@@ -37,9 +37,9 @@ cout<<"Time taken to read file : " << endl;
         }
         timer.timestart();
         // sorting by firstname
-        sort(students.begin(),students.end(),[](const Person& a, const Person& b) {
-            return a.firstname < b.firstname;
-        });
+        students.sort([](const Person& a, const Person& b) {
+    return a.firstname < b.firstname;
+});
 cout<<"Time taken to sort file : " << endl;
        timer.timetaken();
 
