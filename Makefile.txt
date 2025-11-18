@@ -1,0 +1,13 @@
+CXX = g++
+CXXFLAGS = -std=c++17 -O2
+SRC = main.cpp Person.cpp
+HEADERS = Person.h Lib.h
+OUT = main
+
+all: $(OUT)
+
+$(OUT): $(SRC) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(OUT)
+
+clean:
+	rm -f $(OUT) *.o
