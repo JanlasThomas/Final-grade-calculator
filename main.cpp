@@ -17,7 +17,7 @@ int main()
     try {
         timer.timestart();
 
-        ifstream file("students.txt");
+        ifstream file("students100000.txt");
 cout<<"Time taken to read file : " << endl;
         timer.timetaken();
 
@@ -44,12 +44,14 @@ cout<<"Time taken to sort file : " << endl;
        timer.timetaken();
 
         timer.timestart();
-        for (const auto& s : students) {
-            if( (s.FinalgradeAvg >= 5 )|| (s.FinalgradeMed >= 5)  )
+        for (auto s = students.begin(); s!= students.end(); ) {
+            if( (s->FinalgradeAvg >= 5 )|| (s->FinalgradeMed >= 5)  )
             {
-                pass.push_back(s);
+                pass.push_back(*s);
+                s = students.erase(s);
             }
-            else{ fail.push_back(s);}
+            else{ ++s;}
+
        }
 
        cout<<"Time taken to split file : " << endl;
@@ -60,26 +62,18 @@ timer.timestart();
         cout << "PASSED" << endl;
        outputtemplate();
 
-       ofstream passout("passed.txt"), failedout ( "failed.txt");
+       ofstream passout("passed.txt");
        passout << left << setw(15) << "Name" << setw(15) << "Surname"
              << setw(20) << "Final (Avg.)" << setw(5) << "|" << "Final (Med.)" << endl;
 
-             failedout<< left << setw(15) << "Name" << setw(15) << "Surname"
-             << setw(20) << "Final (Avg.)" << setw(5) << "|" << "Final (Med.)" << endl;
+
 
        for (const auto& s : pass)
        {
            passout << s;
            cout<<s<<endl;
        }
-       cout << "FAILED" << endl;
-        outputtemplate();
 
-       for (const auto& s : fail)
-       {
-           failedout << s;
-           cout<<s<<endl;
-       }
 
        cout<<"Time taken to output two new files : " << endl;
  timer.timetaken();
