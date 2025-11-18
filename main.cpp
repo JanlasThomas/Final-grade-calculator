@@ -9,8 +9,8 @@ int main()
     //filegenerator ("students1000000.txt",1000000);
     //filegenerator ("students10000000.txt",10000000);
 
-    deque <Person> pass;
-    deque <Person> fail;
+    vector <Person> pass;
+    vector <Person> fail;
 
     Timer timer;
 
@@ -29,7 +29,7 @@ cout<<"Time taken to read file : " << endl;
 
        if (!getline(file, header)){ throw runtime_error ( " Failed to read the header row") ; }
 
-        deque<Person> students;
+        vector<Person> students;
         Person temp;
 
         while (file >> temp) {
@@ -53,7 +53,7 @@ cout<<"Time taken to sort file : " << endl;
             else{ ++s;}
 
        }
-
+    students.shrink_to_fit();
        cout<<"Time taken to split file : " << endl;
  timer.timetaken();
 
